@@ -3,71 +3,53 @@ import json
 import os
 from copy import copy, deepcopy
 
-from libwsctrl.net.obs_websocket4_client import OBSWebsocketClient
-from libwsctrl.protocols.obs_ws4.obs_websocket_protocol import *
+from libwsctrl.net.obs_websocket5_client import OBSWebsocketClient
+from libwsctrl.protocols.obs_ws5.requests import *
+
+import logging
 
 import asyncio
 
+from libwsctrl.protocols.obs_ws5.tools.messagetools import checkError, innerData
 from libwsctrl.structs.callback import Callback
 
-OBS_ADDRESS = "192.168.114.230"
-#OBS_ADDRESS = "127.0.0.1"
-OBS_PORT = 4444
-OBS_PASSWORD = "12345678"
+OBS_ADDRESS = "192.168.0.94"
+OBS_PORT = 4455
+OBS_PASSWORD = "W3GRyd13y1cXw4aD"
+
+S1_STANDIN = 'Speaker1_standin'
+S2_STANDIN = 'Speaker2_standin'
+S3_STANDIN = 'Speaker3_standin'
+
+H_STANDIN = 'Herald_standin'
+F_STANDIN = 'Slides_standin'
+
+BG_IMG = ['Logo_opaque', 'Logo_transparent', 'speaker-backdrop']
+
+SCENE_LIST = ['FF', 'VM 2', 'VM 1', 'PDF', 'CLEAR']#['F-s3', 'F-S3', 'F-S1-S3', 'F-S2-S3', 'F-S3-H', 'F-S1-S2-S3', 'F-S1-S2-S3-H', 'S3', 'S1-S3', 'S2-S3', 'S3-H', 'S1-S2-S3', 'S1-S2-S3-H'] # , 'F-s1-s2', 'F-s1-h', 'F-s2-h', 'F-s1-s2-h'
+
+SOURCE_LIST = ['Logo']
+
+SRC_SCENE = 'Unity'
 
 
-SCENE_LIST = ['Fscene', 'F-s1', 'F-s2', 'F-h', 'F-S1', 'F-S2', 'F-s1-s2', 'F-S1-H', 'S1-H', 'S2-H', 'H', 'S1-S2', 'S1-S2-H', 'S1', 'S2']
-SOURCE_LIST = ['Bauchbinde Hashtags','SterneKlein_4096', 'FelsenH4096', 'FelsenM4096', 'FelsenV4096', 'Hailand4096', 'Planet4096']
+logger = logging.getLogger()
 
-SRC_SCENE = 'F-S1-S2-H'
+def onSceneItemDuplicated(msg, srcname):
+    if checkError(msg, logger):
+        print("Duplicated Item " + srcname)
 
-sceneItemProperties = {}
-
-
-def onSceneItemPropertiesSent(msg):
-    print(msg)
-
-
-def setItemProperties(msg, scene, source):
-    if msg['status'] != 'ok':
-        print("ERROR adding Scene item: Scene '{}', Item '{}'".format(scene, source))
-        return
-    print("Setting Item Properties: Scene '{}', Item '{}'".format(scene, source))
-
-    callback = Callback(onSceneItemPropertiesSent)
-    wsClient.sendMessageJson(setSceneItemPropertiesFromDict(item={'name': source},
-                                             scene_name= scene,
-                                             properties=sceneItemProperties[source]), callback=callback)
-
-def addSceneItemsToScenes():
-    for scene in SCENE_LIST:
-        for source in SOURCE_LIST:
-            #callback = Callback(setItemProperties, scene=scene, source=source)
-            #wsClient.sendMessageJson(addSceneItem(scene, source, True), callback)
-            msg = {'status': 'ok'}
-            setItemProperties(msg, scene=scene, source=source)
-        sleep(1)
-
-def addSceneItemConfiguration(msg, srcname, sources):
-    if msg['status'] != 'ok':
-        print("ERROR Getting Scene item: Item '{}'".format(srcname))
-        return
-    del msg['status']
-    del msg['message-id']
-
-    sceneItemProperties[srcname] = msg
-
-    print("Got Source:", srcname)
-
-    if sources == len(sceneItemProperties):
-        addSceneItemsToScenes()
-
+def onSceneItemIDObtained(msg, srcname):
+    data = innerData(msg)
+    for targedSCN in SCENE_LIST:
+        callback = Callback(onSceneItemDuplicated, srcname=srcname)
+        wsClient.sendMessageJson(duplicateSceneItem(SRC_SCENE, data['sceneItemId'], targedSCN), callback=callback)
 
 def onAuthenticated(msg):
 
     for i in range(len(SOURCE_LIST)):
-        callback = Callback(addSceneItemConfiguration, srcname=SOURCE_LIST[i], sources = len(SOURCE_LIST))
-        wsClient.sendMessageJson(getSceneItemProperties({"name": SOURCE_LIST[i]}, SRC_SCENE), callback=callback)
+        callback = Callback(onSceneItemIDObtained, srcname=SOURCE_LIST[i])
+        wsClient.sendMessageJson(getSceneItemId(SRC_SCENE, SOURCE_LIST[i]), callback=callback)
 
 
 async def main():

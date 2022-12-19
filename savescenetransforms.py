@@ -12,9 +12,9 @@ from libwsctrl.structs.callback import Callback
 OBS_ADDRESS = "192.168.114.230"
 #OBS_ADDRESS = "127.0.0.1"
 OBS_PORT = 4444
-OBS_PASSWORD = "12345678"
+OBS_PASSWORD = "blahaj"
 
-OUPUT_PATH = "stored_scene.json"
+OUPUT_PATH = "stored_scene_divoc_D2.json"
 
 
 wsClient: OBSWebsocketClient = None

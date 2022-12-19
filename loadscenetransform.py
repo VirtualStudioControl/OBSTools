@@ -6,11 +6,10 @@ from libwsctrl.protocols.obs_ws4.obs_websocket_protocol import *
 from libwsctrl.structs.callback import Callback
 
 OBS_ADDRESS = "192.168.114.230"
-#OBS_ADDRESS = "127.0.0.1"
 OBS_PORT = 4444
-OBS_PASSWORD = "12345678"
+OBS_PASSWORD = "blahaj"
 
-INPUT_PATH = "scene.json"
+INPUT_PATH = "stored_scene_divoc_2.json"
 
 
 wsClient: OBSWebsocketClient = None
