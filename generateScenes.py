@@ -24,7 +24,7 @@ from structures.SceneTemplate import SceneTemplate
 
 OBS_ADDRESS = "192.168.114.230"
 OBS_PORT = 4455
-OBS_PASSWORD = "NjE7PNHPWZefrMuj"
+OBS_PASSWORD = "l2dOXh1CxcSrWWei"
 
 ########################################################################################################################
 ### Templates
@@ -32,70 +32,83 @@ OBS_PASSWORD = "NjE7PNHPWZefrMuj"
 
 SCENE_TEMPLATE_FULL = SceneTemplate(
     name="Template_Full",
-    background=["Background"],
+    background=["mixerinput"],
     slides=[],
-    speakers=["Template_Slides"],
-    overlays=[],
-    logo=["Template_Logo"]
+    speakers=["Template_Input_Slides"],
+    overlays=["FireshonksLogomitFels"],
+    logo=["LogoDark", "LogoLight"]
 )
 
-SCENE_TEMPLATE_SPEAKER1 = SceneTemplate(
-    name="Template_Speakers1",
-    background=["Background"],
+SCENE_TEMPLATE_FULL_NO_OVERLAY = SceneTemplate(
+    name="Template_Full",
+    background=["mixerinput"],
     slides=[],
-    speakers=["Template_Speaker1"],
+    speakers=["Template_Input_Slides"],
     overlays=[],
-    logo=["Template_Logo"]
+    logo=["LogoDark", "LogoLight"]
+)
+
+
+SCENE_TEMPLATE_SPEAKER1 = SceneTemplate(
+    name="Template_1Speaker",
+    background=["Hintergrund", "Boden", "Felsenunten", "Felsenlinks", "Blasen", "FireshonksLogomitFels", "Fireshonk", "mixerinput"],
+    slides=[],
+    speakers=["Template_Input_Slides"],
+    overlays=["Felsenrechts", "overlay_technical_difficulties"],
+    logo=["LogoDark", "LogoLight"]
 )
 
 SCENE_TEMPLATE_SPEAKER2 = SceneTemplate(
-    name="Template_Speakers2",
-    background=["Background"],
+    name="Template_2Speakers",
+    background=["Hintergrund", "Boden", "Felsenunten", "Felsenlinks", "Blasen", "FireshonksLogomitFels", "Fireshonk", "mixerinput"],
     slides=[],
-    speakers=["Template_Speaker1", "Template_Speaker2"],
-    overlays=[],
-    logo=["Template_Logo"]
+    speakers=["Template_Input_Speaker1", "Template_Input_Speaker2"],
+    overlays=["Felsenrechts", "overlay_technical_difficulties"],
+    logo=["LogoDark", "LogoLight"]
 )
 
 SCENE_TEMPLATE_SPEAKER3 = SceneTemplate(
-    name="Template_Speakers3",
-    background=["Background"],
+    name="Template_3Speakers",
+    background=["Hintergrund", "Boden", "Felsenunten", "Felsenlinks", "Blasen", "FireshonksLogomitFels", "Fireshonk", "mixerinput"],
     slides=[],
-    speakers=["Template_Speaker1", "Template_Speaker2", "Template_Speaker3"],
-    overlays=[],
-    logo=["Template_Logo"]
+    speakers=["Template_Input_Speaker1", "Template_Input_Speaker2", "Template_Input_Speaker3"],
+    overlays=["Felsenrechts", "overlay_technical_difficulties"],
+    logo=["LogoDark", "LogoLight"]
 )
 
 SCENE_TEMPLATE_SPEAKER4 = SceneTemplate(
-    name="Template_Speakers4",
-    background=["Background"],
+    name="Template_4Speakers",
+    background=["Hintergrund", "Boden", "Felsenunten", "Felsenlinks", "Blasen", "FireshonksLogomitFels", "Fireshonk", "mixerinput"],
     slides=[],
-    speakers=["Template_Speaker1", "Template_Speaker2", "Template_Speaker3", "Template_Speaker4"],
-    overlays=[],
-    logo=["Template_Logo"]
+    speakers=["Template_Input_Speaker1", "Template_Input_Speaker2", "Template_Input_Speaker3", "Template_Input_Speaker4"],
+    overlays=["Felsenrechts", "overlay_technical_difficulties"],
+    logo=["LogoDark", "LogoLight"]
 )
 
 
 SCENE_TEMPLATE_SLIDES = SceneTemplate(
-    name="Template_Slide",
-    background=["Background"],
-    slides=["Template_Slides"],
-    speakers=["Template_Speaker1", "Template_Speaker2", "Template_Speaker3", "Template_Speaker4"],
-    overlays=[],
-    logo=["Template_Logo"]
+    name="Template_Slides_4Speakers",
+    background=["Hintergrund", "Boden", "Felsenunten", "Felsenlinks", "Blasen", "FireshonksLogomitFels", "Fireshonk", "mixerinput"],
+    slides=["Standin_Slides", "BMD_Input_5", "Slides_REMOTE"],
+    speakers=["Template_Input_Speaker1", "Template_Input_Speaker2", "Template_Input_Speaker3", "Template_Input_Speaker4"],
+    overlays=["Felsenrechts", "overlay_technical_difficulties"],
+    logo=["LogoDark", "LogoLight"]
 )
 
 TEMPLATE_FULL = "TemplateFull"
+TEMPLATE_FULL_NO_OVERLAY = "TemplateFullNoOverlay"
 TEMPLATE_SPEAKER = "TemplateSingle"
 TEMPLATE_SPEAKER_SLIDES = "TemplateSingleSlides"
 
 TEMPLATE_SCENES = {
     TEMPLATE_FULL: [SCENE_TEMPLATE_FULL],
+    TEMPLATE_FULL_NO_OVERLAY: [SCENE_TEMPLATE_FULL_NO_OVERLAY],
     TEMPLATE_SPEAKER: [SCENE_TEMPLATE_SPEAKER1, SCENE_TEMPLATE_SPEAKER2, SCENE_TEMPLATE_SPEAKER3, SCENE_TEMPLATE_SPEAKER4],
     TEMPLATE_SPEAKER_SLIDES: [SCENE_TEMPLATE_SLIDES],
 }
 
 ALL_TEMPLATES = [*TEMPLATE_SCENES[TEMPLATE_FULL],
+                 *TEMPLATE_SCENES[TEMPLATE_FULL_NO_OVERLAY],
                  *TEMPLATE_SCENES[TEMPLATE_SPEAKER],
                  *TEMPLATE_SCENES[TEMPLATE_SPEAKER_SLIDES]]
 
@@ -116,6 +129,10 @@ REMOTE_BASE = "Remote"
 INFOBEAMER = "Infobeamer"
 TECHNICAL_DIFFICULTIES = "TechnicalDifficulties"
 
+INTRO = "Intro"
+OUTRO = "Outro"
+QNA = "QandA"
+
 SEPERATOR = "-"
 
 ########################################################################################################################
@@ -123,16 +140,19 @@ SEPERATOR = "-"
 ########################################################################################################################
 
 SPEAKER_SOURCES = {
-    "{}{}".format(SPEAKER_BASE, 1): ["Speaker1"],
-    "{}{}".format(SPEAKER_BASE, 2): ["Speaker2"],
-    "{}{}".format(SPEAKER_BASE, 3): ["Speaker3"],
-    HERALD_BASE: ["Herald"],
-    SLIDES_BASE: ["Template_Slides"],
-    "{}{}".format(PREREC_BASE, 1): ["Template_Slides"],
-    "{}{}".format(PREREC_BASE, 2): ["Template_Slides"],
-    "{}{}".format(REMOTE_BASE, 1): ["Template_Slides"],
-    INFOBEAMER: ["Template_Slides"],
-    TECHNICAL_DIFFICULTIES: ["Template_Slides"],
+    "{}{}".format(SPEAKER_BASE, 1): ["Standin_Speaker1", "BMD_Input_1", "Speaker1_REMOTE"],
+    "{}{}".format(SPEAKER_BASE, 2): ["Standin_Speaker2", "BMD_Input_2", "Speaker2_REMOTE"],
+    "{}{}".format(SPEAKER_BASE, 3): ["Standin_Speaker3", "BMD_Input_3", "Speaker3_REMOTE"],
+    HERALD_BASE: ["Standin_Herald", "BMD_Input_4", "Herald_REMOTE"],
+    SLIDES_BASE: ["Standin_Slides", "BMD_Input_5", "Slides_REMOTE"],
+    "{}{}".format(PREREC_BASE, 1): ["PreREC1"],
+    "{}{}".format(PREREC_BASE, 2): ["PreREC2"],
+    "{}{}".format(REMOTE_BASE, 1): ["RTMP1"],
+    INFOBEAMER: ["BMD_Input_6"],
+    TECHNICAL_DIFFICULTIES: ["TechnicalDifficultiesWeb"],
+    INTRO: ["IntroWeb"],
+    OUTRO: ["MISSING_SOURCE"],
+    QNA: ["MISSING_SOURCE"]
 }
 
 ########################################################################################################################
@@ -185,13 +205,17 @@ def generateScenes() -> List[SceneInfo]:
         names.append(SceneInfo(name, [*scene], TEMPLATE_SPEAKER))
 
     for prerec in range(PREREC_COUNT):
-        names.append(SceneInfo("{}{}".format(PREREC_BASE, prerec+1), ["{}{}".format(PREREC_BASE, prerec+1)], TEMPLATE_FULL))
+        names.append(SceneInfo("{}{}".format(PREREC_BASE, prerec+1), ["{}{}".format(PREREC_BASE, prerec+1)], TEMPLATE_FULL_NO_OVERLAY))
 
     for remote in range(REMOTE_COUNT):
-        names.append(SceneInfo("{}{}".format(REMOTE_BASE, remote + 1), ["{}{}".format(REMOTE_BASE, remote + 1)], TEMPLATE_FULL))
+        names.append(SceneInfo("{}{}".format(REMOTE_BASE, remote + 1), ["{}{}".format(REMOTE_BASE, remote + 1)], TEMPLATE_FULL_NO_OVERLAY))
 
-    names.append(SceneInfo(INFOBEAMER, [INFOBEAMER], TEMPLATE_FULL))
-    names.append(SceneInfo(TECHNICAL_DIFFICULTIES, [TECHNICAL_DIFFICULTIES], TEMPLATE_FULL))
+    names.append(SceneInfo(INFOBEAMER, [INFOBEAMER], TEMPLATE_FULL_NO_OVERLAY))
+    names.append(SceneInfo(TECHNICAL_DIFFICULTIES, [TECHNICAL_DIFFICULTIES], TEMPLATE_FULL_NO_OVERLAY))
+
+    names.append(SceneInfo(INTRO, [INTRO], TEMPLATE_FULL_NO_OVERLAY))
+    names.append(SceneInfo(OUTRO, [OUTRO], TEMPLATE_FULL_NO_OVERLAY))
+    names.append(SceneInfo(QNA, [QNA], TEMPLATE_FULL_NO_OVERLAY))
 
     return names
 
@@ -306,11 +330,13 @@ async def sceneTask():
 
         for scene in scenes:
             await sem.acquire()
+            print("Generating " + scene.name)
             callback = Callback(onSceneCreated, sceneInfo=scene, semaphore=sem)
             wsClient.sendMessageJson(createScene(scene.name), callback=callback)
 
 
 def onAuthenticated(msg):
+    print(msg)
     asyncio.create_task(sceneTask())
 
 
