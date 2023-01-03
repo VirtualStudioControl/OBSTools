@@ -2,20 +2,23 @@ import errno
 import json
 import os
 
-from libwsctrl.net.obs_websocket4_client import OBSWebsocketClient
-from libwsctrl.protocols.obs_ws4.obs_websocket_protocol import *
+from libwsctrl.net.obs_websocket5_client import OBSWebsocketClient
+from libwsctrl.protocols.obs_ws5.requests import *
 
 import asyncio
 
 from libwsctrl.structs.callback import Callback
 
-OBS_ADDRESS = "192.168.114.230"
-#OBS_ADDRESS = "127.0.0.1"
-OBS_PORT = 4444
-OBS_PASSWORD = "blahaj"
+#OBS_ADDRESS = "192.168.114.230"
+#OBS_PORT = 4455
+#OBS_PASSWORD = "l2dOXh1CxcSrWWei"
+
+OBS_ADDRESS = "192.168.232.69"
+OBS_PORT = 4455
+OBS_PASSWORD = "123456"
+
 
 OUPUT_PATH = "stored_scene_divoc_D2.json"
-
 
 wsClient: OBSWebsocketClient = None
 
